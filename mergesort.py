@@ -1,45 +1,44 @@
-def ASSIGNMENT(new_list, i, old_list, j):
-    new_list[i] = old_list[j]
+import matplotlib.pyplot as plt
 
-
-def mergeSort(list_to_sort_by_merge):
-    if (
-        len(list_to_sort_by_merge) > 1
-        and not len(list_to_sort_by_merge) < 1
-        and len(list_to_sort_by_merge) != 0
-    ):
-        mid = len(list_to_sort_by_merge) // 2
+def merge_sort(list_to_sort_by_merge):
+    """
+    Sortiert eine Liste in-place mit dem Merge-Sort-Algorithmus.
+    """
+    if len(list_to_sort_by_merge) > 1:
+        # Liste in linke und rechte Hälfte teilen
+	mid = len(list_to_sort_by_merge) // 2
         left = list_to_sort_by_merge[:mid]
         right = list_to_sort_by_merge[mid:]
 
-        mergeSort(left)
-        mergeSort(right)
+	# rekursiver Aufruf auf beiden Hälften
+        merge_sort(left)
+        merge_sort(right)
 
-        l = 0
-        r = 0
-        i = 0
+        left_idx = 0
+        right_idx = 0
+        merged_idx = 0
 
-        while l < len(left) and r < len(right):
-            if left[l] <= right[r]:
-                ASSIGNMENT(new_list=list_to_sort_by_merge, i=i, old_list=left, j=l)
-                l += 1
+	# left und right sind jetzt sortiert -> immer kleineres Element nehmen
+        while left_idx < len(left) and right_idx < len(right):
+            if left[left_idx] <= right[right_idx]:
+                list_to_sort_by_merge[merged_idx] = left[left_idx]
+                left_idx += 1
             else:
-                ASSIGNMENT(new_list=list_to_sort_by_merge, i=i, old_list=right, j=r)
-                r += 1
-            i += 1
+                list_to_sort_by_merge[merged_idx] = right[right_idx]
+                right_idx += 1
+            merged_idx += 1
 
-        while l < len(left):
-            list_to_sort_by_merge[i] = left[l]
-            l += 1
-            i += 1
+	# Falls noch Elemente in left verbleiben -> anhängen
+        while left_idx < len(left):
+            list_to_sort_by_merge[merged_idx] = left[left_idx]
+            left_idx += 1
+            merged_idx += 1
 
-        while r < len(right):
-            list_to_sort_by_merge[i] = right[r]
-            r += 1
-            i += 1
-
-
-import matplotlib.pyplot as plt
+	# Falls noch Elemente in right verbleiben -> anhängen
+        while right_idx < len(right):
+            list_to_sort_by_merge[merged_idx] = right[right_idx]
+            right_idx += 1
+            merged_idx += 1
 
 if __name__ == "__main__":
     # Visualisierung vor und nach dem Sortieren
