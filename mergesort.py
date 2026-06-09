@@ -1,4 +1,4 @@
-import matplotlib.pyplot as plt	
+import matplotlib.pyplot as plt
 
 def merge_sort(list_to_sort_by_merge):
     """
